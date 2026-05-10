@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Health and Development</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.32.0/plotly.min.js"></script>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <h1>Global Health and Development</h1>
+  <div id="header-subtitle">Hover and click a country for details · Scroll to zoom · Drag to pan</div>
+</header>
+
+<div class="controls">
+  <div class="control-group">
+    <div class="control-label">Category</div>
+    <div class="cat-tabs" id="cat-tabs">
+      <button class="active" data-cat="health" onclick="setCategory('health')">Health</button>
+      <button data-cat="demographics" onclick="setCategory('demographics')">Demographics</button>
+      <button data-cat="society" onclick="setCategory('society')">Society</button>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="control-label">Metric</div>
+    <select id="metric-select"></select>
+  </div>
+
+  <div class="control-group">
+    <div class="control-label">Year</div>
+    <div class="year-slider-wrap">
+      <div class="slider-row">
+        <button onclick="stepYear(-1)" class="step-btn">&#8722;</button><input type="range" id="year-slider" min="1950" max="2023" step="1" value="2023"><button onclick="stepYear(1)" class="step-btn">+</button>
+        <div id="year-display">2023</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="stat-container">
+    <div class="stat-pill"><span>avg: </span><b id="stat-avg">—</b></div>
+    <div class="stat-pill" id="pill-max"><span>max: </span><b id="stat-max">—</b><span class="pill-tooltip" id="tip-max"></span></div>
+    <div class="stat-pill" id="pill-min"><span>min: </span><b id="stat-min">—</b><span class="pill-tooltip" id="tip-min"></span></div>
+    <div id="projected-badge">⚠ projected data</div>
+  </div>
+</div>
+
+<div id="map-container" style="position:relative;">
+  <div class="loading-overlay" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text" id="loading-text">Loading data…</div>
+  </div>
+  <div id="map"></div>
+</div>
+
+<footer>
+  <span id="footer-source"></span>
+  <div class="footer-controls">
+  <button id="legend-btn" onclick="openLegend()" class="footer-btn">Color Legend</button>
+  <button id="cb-btn" onclick="toggleAltColors()" class="footer-btn">Alt Colors</button>
+  <div id="zoom-controls">
+    <button class="zoom-btn" onclick="pageZoom(-10)">−</button>
+    <span id="zoom-level">100%</span>
+    <button class="zoom-btn" onclick="pageZoom(10)">+</button>
+    <button class="zoom-btn" onclick="pageZoomReset()" style="font-size:11px;">Reset</button>
+  </div>
+  </div>
+</footer>
+
+<div id="detail-panel" class="side-panel">
+  <div id="panel-header">
+    <div>
+      <div id="panel-country">&#8212;</div>
+      <div id="panel-metric">&#8212;</div>
+    </div>
+    <div class="panel-actions">
+      <button id="panel-save" onclick="saveChart()" class="footer-btn">Save</button>
+      <button id="panel-close" onclick="closePanel()">&#x2715;</button>
+    </div>
+  </div>
+  <div id="panel-notice"></div>
+  <div id="panel-chart"></div>
+</div>
+<div id="legend-panel" class="side-panel">
+  <div id="legend-panel-header">
+    <div id="legend-panel-title">&#8212;</div>
+    <div id="legend-panel-sub">Color scale</div>
+  </div>
+  <div id="legend-panel-body"></div>
+</div>
+<script src="js/colorscales.js"></script>
+<script src="js/datasets.js"></script>
+<script src="js/map.js"></script>
+<script src="js/panel.js"></script>
+<script src="js/ui.js"></script>
+</body>
+</html>
