@@ -12,10 +12,13 @@ function pageZoomReset() {
 }
 
 function applyZoom() {
-  document.getElementById('map').style.maxWidth = (1000 * currentZoom / 100) + 'px';
+  var baseWidth = Math.round(1000 + (window.innerWidth - 1440) * 25 / 24);
+  document.getElementById('map').style.maxWidth = (baseWidth * currentZoom / 100) + 'px';
   document.getElementById('zoom-level').textContent = currentZoom + '%';
   Plotly.Plots.resize(document.getElementById('map'));
 }
+
+applyZoom();
 
 // alternative colors for accessibility
 function toggleAltColors() {
